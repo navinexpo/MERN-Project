@@ -31,6 +31,7 @@ const AdminProducts = () => {
 
 
   const onSubmit = () => {};
+  console.log(formData, "formData")
 
   return (
     <Fragment>
@@ -56,6 +57,7 @@ const AdminProducts = () => {
               uploadedImageUrl={uploadedImageUrl}
               setUploadImageUrl={setUploadImageUrl}
               setImageLoadingState={setImageLoadingState}
+              imageLoadingState={imageLoadingState}
 
             />
             <div className="py-6">
