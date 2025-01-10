@@ -8,7 +8,10 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { addProductFormElements } from "@/config";
-import { Fragment, useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { addNewProduct, fetchAllProducts } from "@/store/admin/products-slice";
+import { Fragment, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const initialFormData = {
   image: null,
@@ -29,9 +32,41 @@ const AdminProducts = () => {
   const [uploadedImageUrl, setUploadImageUrl] = useState("");
   const [imageLoadingState, setImageLoadingState] = useState(false);
 
+  //get the state from the product slice
+  const { productList } = useSelector((state) => state.adminProducts);
 
-  const onSubmit = () => {};
-  console.log(formData, "formData")
+  //to fetch the product
+  const dispatch = useDispatch();
+  const {toast} = useToast()
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    //call the async thunk that we have created in slice, once this save and we can fetch the product.
+    dispatch(
+      addNewProduct({
+        ...formData,
+        image: uploadedImageUrl,
+      })
+    ).then((data) => {
+      console.log(data);
+      if(data?.payload?.success){
+        //reset the form, close the modal, fetch the product and show the success toast on fetch
+        dispatch(fetchAllProducts())
+        setOpenCreateProductsDialog(false)
+        setImageFile(null);
+        setFormData(initialFormData)
+        toast({
+          title: "Product added successfully"
+        })
+      }
+    });
+  };
+
+  useEffect(() => {
+    dispatch(fetchAllProducts());
+  }, [dispatch]);
+
+  console.log(productList, "productList");
 
   return (
     <Fragment>
@@ -58,7 +93,6 @@ const AdminProducts = () => {
               setUploadImageUrl={setUploadImageUrl}
               setImageLoadingState={setImageLoadingState}
               imageLoadingState={imageLoadingState}
-
             />
             <div className="py-6">
               <CommonForm
