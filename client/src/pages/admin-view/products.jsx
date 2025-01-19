@@ -33,6 +33,7 @@ const AdminProducts = () => {
   const [imageFile, setImageFile] = useState(null);
   const [uploadedImageUrl, setUploadImageUrl] = useState("");
   const [imageLoadingState, setImageLoadingState] = useState(false);
+  const [currentEditedId, setCurrentEditedId] = useState(null);
 
   //get the state from the product slice
   const { productList } = useSelector((state) => state.adminProducts);
@@ -80,7 +81,13 @@ const AdminProducts = () => {
       <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
         {productList && productList.length > 0
           ? productList.map((productItem) => (
-              <AdminProductTile product={productItem} />
+              <AdminProductTile
+                key={productItem._id}
+                product={productItem}
+                setFormData={setFormData}
+                setCurrentEditedId={setCurrentEditedId}
+                setOpenCreateProductsDialog={setOpenCreateProductsDialog}
+              />
             ))
           : null}
       </div>
