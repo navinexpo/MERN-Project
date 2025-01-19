@@ -1,4 +1,6 @@
+/* eslint-disable react/jsx-key */
 import ProductImageUpload from "@/components/admin-view/image-upload";
+import AdminProductTile from "@/components/admin-view/product-tile";
 import CommonForm from "@/components/common/form";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,7 +27,8 @@ const initialFormData = {
 };
 
 const AdminProducts = () => {
-  const [openCreateProductsDialog, setOpenCreateProductsDialog] = useState(false);
+  const [openCreateProductsDialog, setOpenCreateProductsDialog] =
+    useState(false);
   const [formData, setFormData] = useState(initialFormData);
   const [imageFile, setImageFile] = useState(null);
   const [uploadedImageUrl, setUploadImageUrl] = useState("");
@@ -36,7 +39,7 @@ const AdminProducts = () => {
 
   //to fetch the product
   const dispatch = useDispatch();
-  const {toast} = useToast()
+  const { toast } = useToast();
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -48,15 +51,15 @@ const AdminProducts = () => {
       })
     ).then((data) => {
       console.log(data);
-      if(data?.payload?.success){
+      if (data?.payload?.success) {
         //reset the form, close the modal, fetch the product and show the success toast on fetch
-        dispatch(fetchAllProducts())
-        setOpenCreateProductsDialog(false)
+        dispatch(fetchAllProducts());
+        setOpenCreateProductsDialog(false);
         setImageFile(null);
-        setFormData(initialFormData)
+        setFormData(initialFormData);
         toast({
-          title: "Product added successfully"
-        })
+          title: "Product added successfully",
+        });
       }
     });
   };
@@ -75,36 +78,41 @@ const AdminProducts = () => {
         </Button>
       </div>
       <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
-        <Sheet
-          open={openCreateProductsDialog}
-          onOpenChange={() => {
-            setOpenCreateProductsDialog(false);
-          }}
-        >
-          <SheetContent side="right" className="overflow-auto">
-            <SheetHeader>
-              <SheetTitle>Add New Product</SheetTitle>
-            </SheetHeader>
-            <ProductImageUpload
-              imageFile={imageFile}
-              setImageFile={setImageFile}
-              uploadedImageUrl={uploadedImageUrl}
-              setUploadImageUrl={setUploadImageUrl}
-              setImageLoadingState={setImageLoadingState}
-              imageLoadingState={imageLoadingState}
-            />
-            <div className="py-6">
-              <CommonForm
-                onSubmit={onSubmit}
-                formControls={addProductFormElements}
-                formData={formData}
-                setFormData={setFormData}
-                buttonText="Add"
-              />
-            </div>
-          </SheetContent>
-        </Sheet>
+        {productList && productList.length > 0
+          ? productList.map((productItem) => (
+              <AdminProductTile product={productItem} />
+            ))
+          : null}
       </div>
+      <Sheet
+        open={openCreateProductsDialog}
+        onOpenChange={() => {
+          setOpenCreateProductsDialog(false);
+        }}
+      >
+        <SheetContent side="right" className="overflow-auto">
+          <SheetHeader>
+            <SheetTitle>Add New Product</SheetTitle>
+          </SheetHeader>
+          <ProductImageUpload
+            imageFile={imageFile}
+            setImageFile={setImageFile}
+            uploadedImageUrl={uploadedImageUrl}
+            setUploadImageUrl={setUploadImageUrl}
+            setImageLoadingState={setImageLoadingState}
+            imageLoadingState={imageLoadingState}
+          />
+          <div className="py-6">
+            <CommonForm
+              onSubmit={onSubmit}
+              formControls={addProductFormElements}
+              formData={formData}
+              setFormData={setFormData}
+              buttonText="Add"
+            />
+          </div>
+        </SheetContent>
+      </Sheet>
     </Fragment>
   );
 };
