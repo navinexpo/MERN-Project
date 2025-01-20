@@ -14,7 +14,8 @@ const ProductImageUpload = ({
   uploadedImageUrl,
   setUploadImageUrl,
   setImageLoadingState,
-  imageLoadingState
+  imageLoadingState,
+  isEditMode
 }) => {
   const inputRef = useRef(null);
 
@@ -80,6 +81,7 @@ const ProductImageUpload = ({
           className="hidden"
           ref={inputRef}
           onChange={handleImageFileChange}
+          disabled={isEditMode}
         />
         {!imageFile ? (
           <Label

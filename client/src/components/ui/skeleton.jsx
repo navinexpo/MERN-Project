@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils"
 
 function Skeleton({
+  // eslint-disable-next-line react/prop-types
   className,
   ...props
 }) {

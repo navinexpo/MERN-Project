@@ -108,6 +108,7 @@ const AdminProducts = () => {
             setUploadImageUrl={setUploadImageUrl}
             setImageLoadingState={setImageLoadingState}
             imageLoadingState={imageLoadingState}
+            isEditMode = {currentEditedId !== null}
           />
           <div className="py-6">
             <CommonForm
