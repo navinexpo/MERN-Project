@@ -8,7 +8,7 @@ cloudinary.config({
   api_secret: "1uhCojiqSwzpjBt4V5naoAN-XtE",
 });
 
-
+// Configure multer for memory storage
 const storage = new multer.memoryStorage();
 
 async function imageUploadUtil(file) {
@@ -24,7 +24,7 @@ async function imageUploadUtil(file) {
   }
 }
 
-
+// Create a multer upload middleware
 const upload = multer({ storage });
 
 module.exports = { upload, imageUploadUtil };
