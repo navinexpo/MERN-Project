@@ -11,13 +11,15 @@ import { Skeleton } from "../ui/skeleton";
 const ProductImageUpload = ({
   imageFile,
   setImageFile,
-  uploadedImageUrl,
+  // uploadedImageUrl,
   setUploadImageUrl,
   setImageLoadingState,
   imageLoadingState,
-  isEditMode
+  isEditMode,
 }) => {
   const inputRef = useRef(null);
+
+  console.log("EditMode-->", isEditMode);
 
   function handleImageFileChange(e) {
     console.log(e.target.files);
@@ -58,7 +60,7 @@ const ProductImageUpload = ({
     if (response?.data?.success) {
       setUploadImageUrl(response.data.result.url);
       setImageLoadingState(false);
-    };
+    }
   };
 
   //to check the image upload file is there or not by using useEffect hook
@@ -73,7 +75,7 @@ const ProductImageUpload = ({
       <div
         onDragOver={handleDragOver}
         onDrop={handleDrop}
-        className="border-2 border-dashed rounded-lg p-4"
+        className={`${isEditMode ? "opacity-65" : "" }border-2 border-dashed rounded-lg p-4`}
       >
         <Input
           id="image-upload"
@@ -86,14 +88,14 @@ const ProductImageUpload = ({
         {!imageFile ? (
           <Label
             htmlFor="image-upload"
-            className="flex flex-col items-center justify-center h-32 cursor-pointer"
+            className={`${ isEditMode ? 'cursor-not-allowed' : ""} flex flex-col items-center justify-center h-32 cursor-pointer`}
           >
             <UploadCloud className="w-10 h-10 text-muted-foreground mb-2" />
             <span className="">Drag & Drop or click to upload image</span>
           </Label>
+        ) : imageLoadingState ? (
+          <Skeleton className="h-10 bg-gray-100" />
         ) : (
-          imageLoadingState ? 
-          <Skeleton className='h-10 bg-gray-100'/> :
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <FileIcon className="w-8 text-primary mr-2 h-8" />

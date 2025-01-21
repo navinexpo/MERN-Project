@@ -33,7 +33,10 @@ const AdminProducts = () => {
   const [imageFile, setImageFile] = useState(null);
   const [uploadedImageUrl, setUploadImageUrl] = useState("");
   const [imageLoadingState, setImageLoadingState] = useState(false);
-  const [currentEditedId, setCurrentEditedId] = useState(null);
+  const [currentEditedId, setCurrentEditedId] = useState(true);
+
+  // const isEditMode = currentEditedId !== null;
+  // console.log("Parent isEditMode value:", isEditMode);
 
   //get the state from the product slice
   const { productList } = useSelector((state) => state.adminProducts);
@@ -110,6 +113,7 @@ const AdminProducts = () => {
             imageLoadingState={imageLoadingState}
             isEditMode = {currentEditedId !== null}
           />
+          
           <div className="py-6">
             <CommonForm
               onSubmit={onSubmit}
@@ -124,5 +128,4 @@ const AdminProducts = () => {
     </Fragment>
   );
 };
-
 export default AdminProducts;
