@@ -75,14 +75,15 @@ const ProductImageUpload = ({
       <div
         onDragOver={handleDragOver}
         onDrop={handleDrop}
-        className={`${isEditMode ? "opacity-65" : "" }border-2 border-dashed rounded-lg p-4`}
-      >
+        className={`${isEditMode ? "opacity-70" : "" } border-2 border-dashed rounded-lg p-4`}
+      > 
         <Input
           id="image-upload"
           type="file"
           className="hidden"
           ref={inputRef}
           onChange={handleImageFileChange}
+          //disabled property for edit mode.
           disabled={isEditMode}
         />
         {!imageFile ? (

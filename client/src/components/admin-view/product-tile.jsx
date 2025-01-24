@@ -31,7 +31,7 @@ const AdminProductTile = ({ product, setFormData, setCurrentEditedId, setOpenCre
         <CardFooter className="flex justify-between items-center">
                 <Button onClick={()=> {
                   setOpenCreateProductsDialog(true)
-                  setCurrentEditedId(product._id)
+                  setCurrentEditedId(product?._id)
                   setFormData(product)
                 }}>Edit</Button>
                 <Button>Delete</Button>

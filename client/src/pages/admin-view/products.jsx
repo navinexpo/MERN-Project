@@ -33,7 +33,7 @@ const AdminProducts = () => {
   const [imageFile, setImageFile] = useState(null);
   const [uploadedImageUrl, setUploadImageUrl] = useState("");
   const [imageLoadingState, setImageLoadingState] = useState(false);
-  const [currentEditedId, setCurrentEditedId] = useState(true);
+  const [currentEditedId, setCurrentEditedId] = useState(null);
 
   // const isEditMode = currentEditedId !== null;
   // console.log("Parent isEditMode value:", isEditMode);
@@ -85,7 +85,7 @@ const AdminProducts = () => {
         {productList && productList.length > 0
           ? productList.map((productItem) => (
               <AdminProductTile
-                key={productItem._id}
+                // key={productItem._id}
                 product={productItem}
                 setFormData={setFormData}
                 setCurrentEditedId={setCurrentEditedId}
@@ -98,6 +98,10 @@ const AdminProducts = () => {
         open={openCreateProductsDialog}
         onOpenChange={() => {
           setOpenCreateProductsDialog(false);
+          setCurrentEditedId(null); //reset the editID when closing
+          setFormData(initialFormData); //reest the form data
+          setImageFile(null); //reset the image file
+          setUploadImageUrl(""); //reset the image url
         }}
       >
         <SheetContent side="right" className="overflow-auto">
